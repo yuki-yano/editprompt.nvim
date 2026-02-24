@@ -20,6 +20,10 @@ local function execute_input(flag)
     vim.schedule(function()
       if result.code == 0 then
         utils.clear_buffer()
+        local ok, render_ui = pcall(require, "render-markdown.core.ui")
+        if ok then
+          vim.api.nvim_buf_clear_namespace(0, render_ui.ns, 0, -1)
+        end
       else
         local err_msg = result.stderr or "Unknown error"
         vim.notify("editprompt error: " .. err_msg, vim.log.levels.ERROR)
