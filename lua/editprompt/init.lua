@@ -62,6 +62,28 @@ end
 
 --[=[@doc
   category = "api"
+  name = "history_prev"
+  desc = """
+Replace current buffer content with the previous sent prompt.
+"""
+--]=]
+editprompt.history_prev = function()
+  require("editprompt.history").prev()
+end
+
+--[=[@doc
+  category = "api"
+  name = "history_next"
+  desc = """
+Replace current buffer content with the next prompt in history.
+"""
+--]=]
+editprompt.history_next = function()
+  require("editprompt.history").next()
+end
+
+--[=[@doc
+  category = "api"
   name = "setup"
   desc = """
 ```lua
