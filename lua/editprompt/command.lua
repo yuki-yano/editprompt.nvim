@@ -92,10 +92,7 @@ local subcmd_tbl = {
       end
     end,
     complete = function(subcmd_arg_lead)
-      return CommandRegister.get_complete(
-        subcmd_arg_lead,
-        { "push", "pop", "drop" }
-      )
+      return CommandRegister.get_complete(subcmd_arg_lead, { "push", "pop", "drop" })
     end,
   },
 }

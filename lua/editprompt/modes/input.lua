@@ -4,13 +4,6 @@ local utils = require("editprompt.utils")
 
 local M = {}
 
-local function clear_render_markdown()
-  local ok, render_ui = pcall(require, "render-markdown.core.ui")
-  if ok then
-    vim.api.nvim_buf_clear_namespace(0, render_ui.ns, 0, -1)
-  end
-end
-
 --- Execute input command with specified flag
 ---@param flag string "--always-copy" or "--auto-send"
 local function execute_input(flag)
@@ -28,7 +21,10 @@ local function execute_input(flag)
     vim.schedule(function()
       if result.code == 0 then
         utils.clear_buffer()
-        clear_render_markdown()
+        local ok, render_ui = pcall(require, "render-markdown.core.ui")
+        if ok then
+          vim.api.nvim_buf_clear_namespace(0, render_ui.ns, 0, -1)
+        end
         history.push(content)
       else
         local err_msg = result.stderr or "Unknown error"
