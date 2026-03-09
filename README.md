@@ -6,6 +6,7 @@
 
 - Neovim frontend for the [editprompt](https://github.com/eetann/editprompt) CLI tool
 - Send buffer content to clipboard or target pane
+- Navigate previously sent prompts from history
 - Dump output from editprompt CLI into buffer
 - Stash/restore buffer content with picker UI
 
@@ -34,6 +35,8 @@ with [lazy.nvim](https://github.com/folke/lazy.nvim)
   keys = {
     { "<Space>ei", "<Cmd>Editprompt input --auto-send<CR>" },
     { "<Space>eI", "<Cmd>Editprompt input<CR>" },
+    { "<Space>ep", "<Cmd>Editprompt history prev<CR>" },
+    { "<Space>en", "<Cmd>Editprompt history next<CR>" },
     { "<Space>ed", "<Cmd>Editprompt dump<CR>" },
     { "<Space>es", "<Cmd>Editprompt stash pop<CR>" },
     { "<Space>eS", "<Cmd>Editprompt stash push<CR>" },
@@ -68,6 +71,21 @@ with [lazy.nvim](https://github.com/folke/lazy.nvim)
 Dump quoted content from editprompt CLI
 
 _No arguments_
+&nbsp;
+
+
+### history
+```
+:Editprompt history
+```
+
+History navigation for previously sent prompts
+
+
+| Name | Description |
+|------|-------------|
+| prev\|next | prev: older prompt, next: newer prompt or current draft |
+
 &nbsp;
 
 
@@ -109,6 +127,20 @@ Stash operations (push/pop/drop)
 ### dump
 Dump quoted content from editprompt CLI.
 Executes `editprompt dump`.
+
+_No arguments_
+&nbsp;
+
+
+### history_next
+Replace current buffer content with the next prompt in history.
+
+_No arguments_
+&nbsp;
+
+
+### history_prev
+Replace current buffer content with the previous sent prompt.
 
 _No arguments_
 &nbsp;

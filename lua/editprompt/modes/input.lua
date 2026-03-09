@@ -1,4 +1,5 @@
 local config = require("editprompt.config")
+local history = require("editprompt.history")
 local utils = require("editprompt.utils")
 
 local M = {}
@@ -24,6 +25,7 @@ local function execute_input(flag)
         if ok then
           vim.api.nvim_buf_clear_namespace(0, render_ui.ns, 0, -1)
         end
+        history.push(content)
       else
         local err_msg = result.stderr or "Unknown error"
         vim.notify("editprompt error: " .. err_msg, vim.log.levels.ERROR)

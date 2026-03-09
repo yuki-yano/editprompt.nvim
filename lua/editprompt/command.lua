@@ -31,6 +31,33 @@ local subcmd_tbl = {
   },
   --[=[@doc
   category = "command"
+  name = "history"
+  desc = "History navigation for previously sent prompts"
+
+  [[args]]
+  name = "prev|next"
+  desc = "prev: older prompt, next: newer prompt or current draft"
+  --]=]
+  history = {
+    impl = function(args)
+      local subcmd = args[1]
+      if subcmd == "prev" then
+        require("editprompt.history").prev()
+      elseif subcmd == "next" then
+        require("editprompt.history").next()
+      else
+        vim.notify(
+          "Editprompt: Unknown history command: " .. (subcmd or ""),
+          vim.log.levels.ERROR
+        )
+      end
+    end,
+    complete = function(subcmd_arg_lead)
+      return CommandRegister.get_complete(subcmd_arg_lead, { "prev", "next" })
+    end,
+  },
+  --[=[@doc
+  category = "command"
   name = "dump"
   desc = "Dump quoted content from editprompt CLI"
   --]=]
