@@ -5,7 +5,7 @@
 ## ✨ Features
 
 - Neovim frontend for the [editprompt](https://github.com/eetann/editprompt) CLI tool
-- Send buffer content to clipboard or target pane
+- Send buffer content or selected lines to clipboard or target pane
 - Navigate previously sent prompts from history
 - Dump output from editprompt CLI into buffer
 - Stash/restore buffer content with picker UI
@@ -35,6 +35,7 @@ with [lazy.nvim](https://github.com/folke/lazy.nvim)
   keys = {
     { "<Space>ei", "<Cmd>Editprompt input --auto-send<CR>" },
     { "<Space>eI", "<Cmd>Editprompt input<CR>" },
+    { "<Space>ei", "<Cmd>Editprompt input --visual --auto-send<CR>", mode = "x" },
     { "<Space>ep", "<Cmd>Editprompt history prev<CR>" },
     { "<Space>en", "<Cmd>Editprompt history next<CR>" },
     { "<Space>ed", "<Cmd>Editprompt dump<CR>" },
@@ -57,6 +58,9 @@ with [lazy.nvim](https://github.com/folke/lazy.nvim)
 <!-- auto-generate-e:default_config -->
 
 ## 🚀 Usage
+
+`--visual` is intended for visual-mode mappings such as `xmap <Cmd>Editprompt input --visual<CR>`.
+It sends and removes all lines touched by the selection.
 
 ## Command
 `:Editprompt {subcommand}`
@@ -94,12 +98,13 @@ History navigation for previously sent prompts
 :Editprompt input
 ```
 
-Send buffer content to clipboard (--auto-send for auto paste)
+Send buffer content or selected lines to clipboard (--auto-send for auto paste)
 
 
 | Name | Description |
 |------|-------------|
 | --auto-send | Auto send to target pane |
+| --visual | Send all lines touched by the current visual selection |
 
 &nbsp;
 
@@ -157,6 +162,22 @@ _No arguments_
 ### input_auto_send
 Send buffer content to target pane automatically.
 Executes `editprompt input --auto-send`.
+
+_No arguments_
+&nbsp;
+
+
+### input_visual
+Send lines touched by the visual selection to clipboard.
+Executes `editprompt input --always-copy` with the selected lines.
+
+_No arguments_
+&nbsp;
+
+
+### input_visual_auto_send
+Send lines touched by the visual selection to target pane automatically.
+Executes `editprompt input --auto-send` with the selected lines.
 
 _No arguments_
 &nbsp;

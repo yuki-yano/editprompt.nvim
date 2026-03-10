@@ -11,22 +11,44 @@ local subcmd_tbl = {
   --[=[@doc
   category = "command"
   name = "input"
-  desc = "Send buffer content to clipboard (--auto-send for auto paste)"
+  desc = "Send buffer content or selected lines to clipboard (--auto-send for auto paste)"
 
   [[args]]
   name = "--auto-send"
   desc = "Auto send to target pane"
+
+  [[args]]
+  name = "--visual"
+  desc = "Send all lines touched by the current visual selection"
   --]=]
   input = {
     impl = function(args)
-      if args[1] == "--auto-send" then
+      local has_auto_send = false
+      local has_visual = false
+
+      for _, arg in ipairs(args) do
+        if arg == "--auto-send" then
+          has_auto_send = true
+        elseif arg == "--visual" then
+          has_visual = true
+        end
+      end
+
+      if has_visual and has_auto_send then
+        require("editprompt.modes.input").execute_visual_auto_send()
+      elseif has_visual then
+        require("editprompt.modes.input").execute_visual()
+      elseif has_auto_send then
         require("editprompt.modes.input").execute_auto_send()
       else
         require("editprompt.modes.input").execute()
       end
     end,
     complete = function(subcmd_arg_lead)
-      return CommandRegister.get_complete(subcmd_arg_lead, { "--auto-send" })
+      return CommandRegister.get_complete(
+        subcmd_arg_lead,
+        { "--auto-send", "--visual" }
+      )
     end,
   },
   --[=[@doc
