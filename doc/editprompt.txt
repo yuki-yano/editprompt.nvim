@@ -18,6 +18,8 @@ Table of Contents                               *editprompt-table-of-contents*
   - history_prev                                 |editprompt-api-history_prev|
   - input                                               |editprompt-api-input|
   - input_auto_send                           |editprompt-api-input_auto_send|
+  - input_visual                                 |editprompt-api-input_visual|
+  - input_visual_auto_send             |editprompt-api-input_visual_auto_send|
   - setup                                               |editprompt-api-setup|
   - stash_pop                                       |editprompt-api-stash_pop|
   - stash_push                                     |editprompt-api-stash_push|
@@ -26,7 +28,7 @@ Table of Contents                               *editprompt-table-of-contents*
 1. Features                                              *editprompt-features*
 
 - Neovim frontend for the editprompt <https://github.com/eetann/editprompt> CLI tool
-- Send buffer content to clipboard or target pane
+- Send buffer content or selected lines to clipboard or target pane
 - Navigate previously sent prompts from history
 - Dump output from editprompt CLI into buffer
 - Stash/restore buffer content with picker UI
@@ -60,6 +62,7 @@ with lazy.nvim <https://github.com/folke/lazy.nvim>
       keys = {
         { "<Space>ei", "<Cmd>Editprompt input --auto-send<CR>" },
         { "<Space>eI", "<Cmd>Editprompt input<CR>" },
+        { "<Space>ei", "<Cmd>Editprompt input --visual --auto-send<CR>", mode = "x" },
         { "<Space>ep", "<Cmd>Editprompt history prev<CR>" },
         { "<Space>en", "<Cmd>Editprompt history next<CR>" },
         { "<Space>ed", "<Cmd>Editprompt dump<CR>" },
@@ -84,6 +87,9 @@ with lazy.nvim <https://github.com/folke/lazy.nvim>
 
 ==============================================================================
 4. Usage                                                    *editprompt-usage*
+
+`--visual` is intended for visual-mode mappings such as `xmap <Cmd>Editprompt
+input --visual<CR>`. It sends and removes all lines touched by the selection.
 
 
 ==============================================================================
@@ -123,11 +129,12 @@ INPUT                                               *editprompt-command-input*
     :Editprompt input
 <
 
-Send buffer content to clipboard (–auto-send for auto paste)
+Send buffer content or selected lines to clipboard (–auto-send for auto paste)
 
   Name         Description
-  ------------ --------------------------
+  ------------ --------------------------------------------------------
   –auto-send   Auto send to target pane
+  –visual      Send all lines touched by the current visual selection
  
 
 
@@ -185,6 +192,22 @@ INPUT_AUTO_SEND                               *editprompt-api-input_auto_send*
 
 Send buffer content to target pane automatically. Executes `editprompt input
 --auto-send`.
+
+_No arguments_  
+
+
+INPUT_VISUAL                                     *editprompt-api-input_visual*
+
+Send lines touched by the visual selection to clipboard. Executes `editprompt
+input --always-copy` with the selected lines.
+
+_No arguments_  
+
+
+INPUT_VISUAL_AUTO_SEND             *editprompt-api-input_visual_auto_send*
+
+Send lines touched by the visual selection to target pane automatically.
+Executes `editprompt input --auto-send` with the selected lines.
 
 _No arguments_  
 

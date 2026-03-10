@@ -14,6 +14,18 @@ end
 
 --[=[@doc
   category = "api"
+  name = "input_visual"
+  desc = """
+Send lines touched by the visual selection to clipboard.
+Executes `editprompt input --always-copy` with the selected lines.
+"""
+--]=]
+editprompt.input_visual = function()
+  require("editprompt.modes.input").execute_visual()
+end
+
+--[=[@doc
+  category = "api"
   name = "input_auto_send"
   desc = """
 Send buffer content to target pane automatically.
@@ -22,6 +34,18 @@ Executes `editprompt input --auto-send`.
 --]=]
 editprompt.input_auto_send = function()
   require("editprompt.modes.input").execute_auto_send()
+end
+
+--[=[@doc
+  category = "api"
+  name = "input_visual_auto_send"
+  desc = """
+Send lines touched by the visual selection to target pane automatically.
+Executes `editprompt input --auto-send` with the selected lines.
+"""
+--]=]
+editprompt.input_visual_auto_send = function()
+  require("editprompt.modes.input").execute_visual_auto_send()
 end
 
 --[=[@doc
